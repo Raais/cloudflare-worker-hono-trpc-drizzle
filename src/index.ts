@@ -30,11 +30,12 @@ app.use("*", (c: any, next) =>
   })(c, next)
 );
 
+/* REST API */
 app.get("/", (c) => c.text("Hello from Cloudflare Worker!"));
-
 app.route("/go", links);
 app.route("/txt", text);
 
+/* TRPC */
 app.use(
   "/trpc/*",
   trpcServer({
@@ -48,6 +49,7 @@ app.get('/trpci', async (c) => {
   return c.json({dts: dts, mjs: mjs});
 })
 
+/* Optional */
 app.get("/panel", (c: any) => {
   const url =
     c.env.ENVIRONMENT === "production"
@@ -56,5 +58,4 @@ app.get("/panel", (c: any) => {
   return c.html(renderTrpcPanel(appRouter, { url }));
 });
 
-export type appType = typeof app;
 export default app;
