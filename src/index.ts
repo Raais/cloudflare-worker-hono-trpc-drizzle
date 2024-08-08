@@ -4,6 +4,8 @@ import { trpcServer } from "@hono/trpc-server";
 import { appRouter } from "./router";
 import { renderTrpcPanel } from "@metamorph/trpc-panel";
 import { createTRPCHonoContext } from "./lib/context";
+import { dts, mjs } from "../export/dist/strings";
+import { clerkMiddleware } from '@hono/clerk-auth';
 import { getDrizzle } from "./lib/db";
 import { links } from "./routes/links";
 import { text } from "./routes/text";
@@ -21,6 +23,13 @@ app.use(
   })
 );
 
+app.use("*", (c: any, next) =>
+  clerkMiddleware({
+    publishableKey: c.env.CLERK_PUBLISHABLE_KEY,
+    secretKey: c.env.CLERK_SECRET_KEY,
+  })(c, next)
+);
+
 app.get("/", (c) => c.text("Hello from Cloudflare Worker!"));
 
 app.route("/go", links);
@@ -33,6 +42,11 @@ app.use(
     createContext: (_c, c) => createTRPCHonoContext(_c, c, getDrizzle(c)),
   })
 );
+
+/* Used by client - development */
+app.get('/trpci', async (c) => {
+  return c.json({dts: dts, mjs: mjs});
+})
 
 app.get("/panel", (c: any) => {
   const url =

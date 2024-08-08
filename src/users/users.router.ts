@@ -3,6 +3,13 @@ import { router, publicProcedure, protectedProcedure } from '../lib/trpc';
 import { usersTable } from '../../drizzle/schema';
 
 export const usersRouter = router({
+  getMe: protectedProcedure
+    .query(async ({ input, ctx }) => {
+      const me = ctx.user;
+      return me.fullName;
+    }
+  ),
+  
   getHello: publicProcedure
     .query(async ({ input, ctx }) => {
       return "Hello from Hono + TRPC";
