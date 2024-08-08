@@ -1,5 +1,6 @@
-Create wrangler.toml
-Create .env
+### Create wrangler.toml
+
+### Create .env
 
 ```
 bun install
