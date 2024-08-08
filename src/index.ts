@@ -5,6 +5,8 @@ import { appRouter } from "./router";
 import { renderTrpcPanel } from "@metamorph/trpc-panel";
 import { createTRPCHonoContext } from "./lib/context";
 import { getDrizzle } from "./lib/db";
+import { links } from "./routes/links";
+import { text } from "./routes/text";
 
 const app = new Hono<{
   Bindings: {
@@ -20,6 +22,9 @@ app.use(
 );
 
 app.get("/", (c) => c.text("Hello from Cloudflare Worker!"));
+
+app.route("/go", links);
+app.route("/txt", text);
 
 app.use(
   "/trpc/*",
@@ -37,4 +42,5 @@ app.get("/panel", (c: any) => {
   return c.html(renderTrpcPanel(appRouter, { url }));
 });
 
+export type appType = typeof app;
 export default app;
