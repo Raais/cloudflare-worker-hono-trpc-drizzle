@@ -46,8 +46,8 @@ app.use(
 
 /* Used by client - development */
 app.get('/trpci', async (c) => {
-  return c.json({dts: dts, mjs: mjs});
-})
+  return c.json({ dts: dts, mjs: mjs });
+});
 
 /* Optional */
 app.get("/panel", (c: any) => {

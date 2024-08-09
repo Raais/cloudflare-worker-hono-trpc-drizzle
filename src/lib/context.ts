@@ -3,10 +3,11 @@ import { getAuth } from '@hono/clerk-auth';
 import { ClerkClient } from '@clerk/backend';
 import { LibSQLDatabase } from 'drizzle-orm/libsql';
 import { building } from '../../export/builder/switch';
+import * as schema from '../../drizzle/schema';
 
-export const createTRPCHonoContext = async (_c: FetchCreateContextFnOptions, c: any, db: LibSQLDatabase) => {
-    const auth = getAuth(c)
-    const clerk = c.get('clerk') as ClerkClient
+export const createTRPCHonoContext = async (_c: FetchCreateContextFnOptions, c: any, db: LibSQLDatabase<typeof schema>) => {
+    const auth = getAuth(c);
+    const clerk = c.get('clerk') as ClerkClient;
 
     let user;
 
