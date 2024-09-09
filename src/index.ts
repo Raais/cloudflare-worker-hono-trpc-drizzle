@@ -9,6 +9,7 @@ import { clerkMiddleware } from '@hono/clerk-auth';
 import { getDrizzle } from "./lib/db";
 import { links } from "./routes/links";
 import { text } from "./routes/text";
+import { utils } from "./routes/utils";
 
 const app = new Hono<{
   Bindings: {
@@ -34,6 +35,7 @@ app.use("*", (c: any, next) =>
 app.get("/", (c) => c.text("Hello from Cloudflare Worker!"));
 app.route("/go", links);
 app.route("/txt", text);
+app.route("/utils", utils);
 
 /* TRPC */
 app.use(
