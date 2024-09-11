@@ -10,6 +10,11 @@ import { getDrizzle } from "./lib/db";
 import { links } from "./routes/links";
 import { text } from "./routes/text";
 import { utils } from "./routes/utils";
+import { notes } from "./routes/notes";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
 
 const app = new Hono<{
   Bindings: {
@@ -36,6 +41,7 @@ app.get("/", (c) => c.text("Hello from Cloudflare Worker!"));
 app.route("/go", links);
 app.route("/txt", text);
 app.route("/utils", utils);
+app.route("/notes", notes);
 
 /* TRPC */
 app.use(

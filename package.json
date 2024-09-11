@@ -12,6 +12,7 @@
     "@libsql/client": "^0.8.1",
     "@metamorph/trpc-panel": "1.0.5",
     "@trpc/server": "11.0.0-rc.477",
+    "dayjs": "^1.11.13",
     "drizzle-orm": "^0.32.2",
     "hono": "^4.5.4",
     "moment": "^2.30.1",

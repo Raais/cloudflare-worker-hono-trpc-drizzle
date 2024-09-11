@@ -9,6 +9,7 @@ kv_namespaces = [
 
 [env.dev.vars]
 ENVIRONMENT = "development"
+CFW_API_KEY = ""
 TURSO_DATABASE_URL = "libsql://YOUR TURSO DATABASE URL"
 TURSO_AUTH_TOKEN = "YOUR TURSO AUTH TOKEN"
 CLERK_SECRET_KEY = "sk_test_YOUR CLERK SECRET KEY"
@@ -22,6 +23,7 @@ kv_namespaces = [
 
 [env.production.vars]
 ENVIRONMENT = "production"
+CFW_API_KEY = ""
 TURSO_DATABASE_URL = "libsql://YOUR TURSO DATABASE URL"
 TURSO_AUTH_TOKEN = "YOUR TURSO AUTH TOKEN"
 CLERK_SECRET_KEY = "sk_test_YOUR CLERK SECRET KEY"
