@@ -43,7 +43,8 @@ notes.post("/fetch", async (c) => {
 notes.all("/push", async (c: any) => {
   if (c.req.method !== "POST") return c.text(`POST "body"`, 400);
 
-  const body = await c.req.json().body;
+  const b = await c.req.json();
+  const body = b.body;
   if (!body) return c.text(`POST "body"`, 400);
 
   const key = c.req.header("cfw-api-key");
