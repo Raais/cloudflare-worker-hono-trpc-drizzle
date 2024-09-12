@@ -13,20 +13,22 @@ import { utils } from "./routes/utils";
 import { notes } from "./routes/notes";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { tiles } from "./routes/maptiles";
 
 dayjs.extend(relativeTime);
 
 const app = new Hono<{
   Bindings: {
     KV: KVNamespace;
+    TILES: KVNamespace;
   };
 }>();
 
 app.use(
-  cors({
-    origin: "*",
-    credentials: true,
-  })
+ cors({
+   origin: "*",
+   credentials: true,
+ })
 );
 
 app.use("*", (c: any, next) =>
@@ -42,6 +44,7 @@ app.route("/go", links);
 app.route("/txt", text);
 app.route("/utils", utils);
 app.route("/notes", notes);
+app.route("/map/tiles", tiles);
 
 /* TRPC */
 app.use(
