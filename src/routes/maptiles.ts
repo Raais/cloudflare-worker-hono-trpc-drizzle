@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import { Buffer } from "node:buffer";
+import { isPointInPolygon } from 'geolib';
 
 const MAX_HITS = 500; // 200,000
 const PREFIX = "_tiles";
@@ -27,6 +28,32 @@ tiles.get("/static/:z/:x/:y", async (c) => {
   const z = c.req.param("z");
   const x = c.req.param("x");
   const y = c.req.param("y");
+  
+  function tile2long(x: number, z: number) {
+    return (x/Math.pow(2,z)*360-180);
+  }
+  function tile2lat(y: number, z: number) {
+    var n=Math.PI-2*Math.PI*y/Math.pow(2,z);
+    return (180/Math.PI*Math.atan(0.5*(Math.exp(n)-Math.exp(-n))));
+  }
+  
+  const lat = tile2lat(parseInt(y), parseInt(z));
+  const long = tile2long(parseInt(x), parseInt(z));
+  
+  const ALLOWED_BOUNDS = [
+    { latitude: 5.27402109359528, longitude: 71.66117980975153 },
+    { latitude: 5.3420912644821215, longitude: 74.99286272485952 },
+    { latitude: 3.3789574137604745, longitude: 75.01565127022587 },
+    { latitude: 3.2333535062166447, longitude: 71.61560030165396 },
+  ]
+
+  const carto_url = `https://cartodb-basemaps-b.global.ssl.fastly.net/dark_all/${z}/${x}/${y}.png`;
+
+  if (!isPointInPolygon({ latitude: lat, longitude: long }, ALLOWED_BOUNDS)) {
+    // fallback
+    const carto = await fetch(carto_url);
+    return new Response(carto.body, carto);
+  }
 
   const cacheKey = `cfwtiles:${z}:${x}:${y}`;
 
@@ -56,7 +83,7 @@ tiles.get("/static/:z/:x/:y", async (c) => {
     if (current >= MAX_HITS) {
         //   return c.text("Too many requests.", 429);
         // fallback
-        const carto = await fetch(`https://cartodb-basemaps-b.global.ssl.fastly.net/dark_all/${z}/${x}/${y}.png`);
+        const carto = await fetch(carto_url);
         return new Response(carto.body, carto);
     } else {
       const newHits = current + 1;
