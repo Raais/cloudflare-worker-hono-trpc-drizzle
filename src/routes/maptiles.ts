@@ -140,7 +140,7 @@ tiles.get("/static/:z/:x/:y", async (c) => {
     };
 
     await c.env.TILES.put(cacheKey, JSON.stringify(serialize), {
-      expirationTtl: 24 * 60 * 60 * 1, // 1 days
+      expirationTtl: 24 * 60 * 60 * 15, // 15 days
     });
 
     const options = {
