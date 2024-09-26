@@ -25,8 +25,10 @@ const BOUNDS_HULHUMALE = [
 
 const BOUNDS_GULHIFALHU_THILAFUSHI = [
   { latitude: 4.197746105416513, longitude: 73.48146846876966 },
-  { latitude: 4.20709925662365, longitude: 73.41879306225107 },
-  { latitude: 4.1612903473804295, longitude: 73.390648862539 },
+  { latitude: 4.221919547544871, longitude: 73.47669282482447 },
+  { latitude: 4.263991550243745, longitude: 73.47802369115712 },
+  { latitude: 4.26579985860991, longitude: 73.38054369683925 },
+  { latitude: 4.161078411236602, longitude: 73.37853656349066 },
   { latitude: 4.15971834716602, longitude: 73.48194863756183 },
   { latitude: 4.197746105416513, longitude: 73.48146846876966 },
 ];
